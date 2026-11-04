@@ -1,0 +1,46 @@
+[
+  {
+    "id": "1",
+    "name": "Vasicine",
+    "plantSource": "අදාඨා / Adhatoda vasica (Pavatta)",
+    "category": "Alkaloid",
+    "smiles": "C1CC2=NC3=CC=CC=C3N2C1CO",
+    "molecularWeight": "188.23 g/mol",
+    "lipinskiPass": true,
+    "traditionalUse": "Widely used as a bronchodilator and expectorant in herbal cough remedies.",
+    "description": "A quinazoline alkaloid extracted from the leaves of Justicia adhatoda."
+  },
+  {
+    "id": "2",
+    "name": "Asiaticoside",
+    "plantSource": "ගොටුකොළ / Centella asiatica",
+    "category": "Triterpenoid Saponin",
+    "smiles": "CC(C)C1CCC2C3CCC4=CC(=O)CCC4(C)C3CC5(C)C(CC125)O",
+    "molecularWeight": "959.15 g/mol",
+    "lipinskiPass": false,
+    "traditionalUse": "Memory enhancement, wound healing, and blood circulation support.",
+    "description": "A major active triterpenoid saponin extracted from Gotu Kola leaves."
+  },
+  {
+    "id": "3",
+    "name": "Berberine",
+    "plantSource": "වෙනිවැල් / Coscinium fenestratum",
+    "category": "Isoquinoline Alkaloid",
+    "smiles": "COC1=C(C2=C[N+]3=C(C=C2C=C1)C4=CC5=C(C=C4CC3)OCO5)OC",
+    "molecularWeight": "336.36 g/mol",
+    "lipinskiPass": true,
+    "traditionalUse": "Traditional remedy for fevers, wound disinfection, and stomach ailments.",
+    "description": "A quaternary ammonium salt from the protoberberine group of isoquinoline alkaloids found in Venivel."
+  },
+  {
+    "id": "4",
+    "name": "Nimbin",
+    "plantSource": "කොහොඹ / Azadirachta indica",
+    "category": "Limonoid",
+    "smiles": "CC1=C(C(=O)C2=C(C1)C3(C(CC2)C4(C3CC(O4)(C)C)C)C)OC",
+    "molecularWeight": "454.5 g/mol",
+    "lipinskiPass": true,
+    "traditionalUse": "Natural antiseptic, skin protection, and pest-repellent formulations.",
+    "description": "A biologically active triterpenoid extracted from neem tree leaves and seeds."
+  }
+]
