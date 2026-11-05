@@ -2,7 +2,7 @@
   {
     "id": "1",
     "name": "Vasicine",
-    "plantSource": "අදාඨා / Adhatoda vasica (Pavatta)",
+    "plantSource": "අදාඨා / ஆடாதோடை / Adhatoda vasica",
     "category": "Alkaloid",
     "smiles": "C1CC2=NC3=CC=CC=C3N2C1CO",
     "molecularWeight": "188.23 g/mol",
@@ -13,7 +13,7 @@
   {
     "id": "2",
     "name": "Asiaticoside",
-    "plantSource": "ගොටුකොළ / Centella asiatica",
+    "plantSource": "ගොටුකොළ / வல்லாரை / Centella asiatica",
     "category": "Triterpenoid Saponin",
     "smiles": "CC(C)C1CCC2C3CCC4=CC(=O)CCC4(C)C3CC5(C)C(CC125)O",
     "molecularWeight": "959.15 g/mol",
@@ -24,7 +24,7 @@
   {
     "id": "3",
     "name": "Berberine",
-    "plantSource": "වෙනිවැල් / Coscinium fenestratum",
+    "plantSource": "වෙනිවැල් / மரமஞ்சள் / Coscinium fenestratum",
     "category": "Isoquinoline Alkaloid",
     "smiles": "COC1=C(C2=C[N+]3=C(C=C2C=C1)C4=CC5=C(C=C4CC3)OCO5)OC",
     "molecularWeight": "336.36 g/mol",
@@ -35,12 +35,78 @@
   {
     "id": "4",
     "name": "Nimbin",
-    "plantSource": "කොහොඹ / Azadirachta indica",
+    "plantSource": "කොහොඹ / வேம்பு / Azadirachta indica",
     "category": "Limonoid",
     "smiles": "CC1=C(C(=O)C2=C(C1)C3(C(CC2)C4(C3CC(O4)(C)C)C)C)OC",
     "molecularWeight": "454.5 g/mol",
     "lipinskiPass": true,
     "traditionalUse": "Natural antiseptic, skin protection, and pest-repellent formulations.",
     "description": "A biologically active triterpenoid extracted from neem tree leaves and seeds."
+  },
+  {
+    "id": "5",
+    "name": "Cinnamaldehyde",
+    "plantSource": "කුරුඳු / இலவங்கப்பட்டை / Cinnamomum verum",
+    "category": "Phenylpropene",
+    "smiles": "C1=CC=C(C=C1)C=CC=O",
+    "molecularWeight": "132.16 g/mol",
+    "lipinskiPass": true,
+    "traditionalUse": "Carminative, blood sugar regulation, and antimicrobial spice compound.",
+    "description": "The organic compound that gives true Ceylon cinnamon its distinctive smell and flavor."
+  },
+  {
+    "id": "6",
+    "name": "Aloin",
+    "plantSource": "කොමරිකා / கற்றாழை / Aloe vera",
+    "category": "Anthraquinone Glycoside",
+    "smiles": "CC1=C(C(C2C(C(C(O2)CO)O)O)=C3C(=C1)C(=O)C4=C(C3=O)C=CC=C4O)O",
+    "molecularWeight": "418.39 g/mol",
+    "lipinskiPass": false,
+    "traditionalUse": "Soothing skin burns, wound care, and gentle digestive support.",
+    "description": "A bitter, yellow-brown colored compound found in Aloe vera exudate."
+  },
+  {
+    "id": "7",
+    "name": "Curcumin",
+    "plantSource": "කහ / மஞ்சள் / Curcuma longa",
+    "category": "Diaryloheptanoid",
+    "smiles": "COC1=C(C=CC(=C1)C=CC(=O)CC(=O)C=CC2=CC(=C(C=C2)O)OC)O",
+    "molecularWeight": "368.38 g/mol",
+    "lipinskiPass": true,
+    "traditionalUse": "Powerful anti-inflammatory agent, joint health, and immunity booster.",
+    "description": "The principal curcuminoid of turmeric, widely used in traditional medicine and cuisine."
+  },
+  {
+    "id": "8",
+    "name": "6-Gingerol",
+    "plantSource": "ඉඟුරු / இஞ்சி / Zingiber officinale",
+    "category": "Phenolic Compound",
+    "smiles": "CCCCCC(=O)CCC(C1=CC(=C(C=C1)O)OC)O",
+    "molecularWeight": "294.39 g/mol",
+    "lipinskiPass": true,
+    "traditionalUse": "Relief from nausea, digestive discomfort, and cold symptoms.",
+    "description": "The active pungent constituent of fresh ginger rhizome with antioxidant properties."
+  },
+  {
+    "id": "9",
+    "name": "Emblicanin A",
+    "plantSource": "නෙල්ලි / நெல்லி / Phyllanthus emblica",
+    "category": "Tannin / Polyphenol",
+    "smiles": "C1=CC(=C(C(=C1C(=O)OC2C(C(C(O2)CO)O)O)O)O)O",
+    "molecularWeight": "314.21 g/mol",
+    "lipinskiPass": false,
+    "traditionalUse": "Rejuvenator (Rasayana), rich source of Vitamin C, cellular protection.",
+    "description": "A potent antioxidant polyphenol isolated from Indian Gooseberry (Nelli)."
+  },
+  {
+    "id": "10",
+    "name": "Arjunic Acid",
+    "plantSource": "කුඹුක් / மருதம் / Terminalia arjuna",
+    "category": "Triterpenoid",
+    "smiles": "CC1(CCC2(CCC3(C(=CC4C5(CCC(C(C5(CC4CC3P)C)(C)O)C)C)C2C1)C(=O)O)C)CO",
+    "molecularWeight": "488.7 g/mol",
+    "lipinskiPass": false,
+    "traditionalUse": "Cardioprotective tonic, heart health, and wound healing.",
+    "description": "A pentacyclic triterpenic acid extracted from the bark of the Kumbuk tree."
   }
 ]
