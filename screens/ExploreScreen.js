@@ -4,45 +4,50 @@ import {
   Text, 
   View, 
   FlatList, 
-  TouchableOpacity, 
-  SafeAreaView 
+  TouchableOpacity 
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useTheme } from '../context/ThemeContext';
 import compoundsData from '../data/compounds.json';
 
 export default function ExploreScreen({ navigation }) {
+  const { theme } = useTheme();
+
   const renderItem = ({ item }) => (
     <TouchableOpacity 
-      style={styles.card}
+      style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border }]}
       onPress={() => navigation.navigate('Detail', { compound: item })}
     >
       <View style={styles.cardHeader}>
-        <Text style={styles.compoundName}>{item.name}</Text>
-        <Text style={styles.categoryBadge}>{item.category}</Text>
+        <Text style={[styles.compoundName, { color: theme.primary }]}>{item.name}</Text>
+        <Text style={[styles.categoryBadge, { backgroundColor: theme.badgeBg, color: theme.badgeText }]}>
+          {item.category}
+        </Text>
       </View>
       
-      <Text style={styles.plantSource} numberOfLines={1}>🌿 {item.plantSource}</Text>
+      <Text style={[styles.plantSource, { color: theme.subText }]} numberOfLines={1}>🌿 {item.plantSource}</Text>
       
-      <Text style={styles.useText} numberOfLines={2}>
+      <Text style={[styles.useText, { color: theme.text }]} numberOfLines={2}>
         {item.traditionalUse}
       </Text>
 
-      <View style={styles.footerRow}>
+      <View style={[styles.footerRow, { borderTopColor: theme.border }]}>
         <Text style={[
           styles.lipinskiTag, 
           item.lipinskiPass ? styles.passTag : styles.failTag
         ]}>
           {item.lipinskiPass ? 'Lipinski: Pass ✅' : 'Lipinski: Alert ⚠️'}
         </Text>
-        <Text style={styles.mwText}>MW: {item.molecularWeight}</Text>
+        <Text style={[styles.mwText, { color: theme.subText }]}>MW: {item.molecularWeight}</Text>
       </View>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.headerContainer}>
-        <Text style={styles.headerTitle}>Explore Compounds</Text>
-        <Text style={styles.headerSubtitle}>
+        <Text style={[styles.headerTitle, { color: theme.text }]}>Explore Compounds</Text>
+        <Text style={[styles.headerSubtitle, { color: theme.subText }]}>
           Showing {compoundsData.length} indexed traditional medicinal compounds
         </Text>
       </View>
@@ -61,7 +66,6 @@ export default function ExploreScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: { 
     flex: 1, 
-    backgroundColor: '#f4f7f6', 
     paddingHorizontal: 16, 
     paddingTop: 10 
   },
@@ -70,26 +74,20 @@ const styles = StyleSheet.create({
   },
   headerTitle: { 
     fontSize: 24, 
-    fontWeight: 'bold', 
-    color: '#1b4332' 
+    fontWeight: 'bold' 
   },
   headerSubtitle: { 
     fontSize: 13, 
-    color: '#52796f', 
     marginTop: 2 
   },
   listContainer: { 
     paddingBottom: 20 
   },
   card: { 
-    backgroundColor: '#fff', 
     padding: 16, 
     borderRadius: 14, 
     marginBottom: 12, 
-    shadowColor: '#000', 
-    shadowOffset: { width: 0, height: 1 }, 
-    shadowOpacity: 0.1, 
-    shadowRadius: 2, 
+    borderWidth: 1,
     elevation: 2 
   },
   cardHeader: { 
@@ -100,12 +98,9 @@ const styles = StyleSheet.create({
   },
   compoundName: { 
     fontSize: 18, 
-    fontWeight: 'bold', 
-    color: '#2d6a4f' 
+    fontWeight: 'bold' 
   },
   categoryBadge: { 
-    backgroundColor: '#e2f0d9', 
-    color: '#385723', 
     fontSize: 10, 
     fontWeight: 'bold', 
     paddingHorizontal: 8, 
@@ -115,13 +110,11 @@ const styles = StyleSheet.create({
   },
   plantSource: { 
     fontSize: 13, 
-    color: '#52796f', 
     fontWeight: '600', 
     marginBottom: 8 
   },
   useText: { 
     fontSize: 13, 
-    color: '#495057', 
     marginBottom: 12, 
     lineHeight: 18 
   },
@@ -130,7 +123,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between', 
     alignItems: 'center', 
     borderTopWidth: 1, 
-    borderTopColor: '#f0f0f0', 
     paddingTop: 10 
   },
   lipinskiTag: { 
@@ -151,7 +143,6 @@ const styles = StyleSheet.create({
   },
   mwText: { 
     fontSize: 12, 
-    color: '#6c757d', 
     fontWeight: '500' 
   }
 });
