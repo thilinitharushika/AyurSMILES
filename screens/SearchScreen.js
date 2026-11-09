@@ -9,10 +9,12 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import compoundsData from '../data/compounds.json';
 
 export default function SearchScreen({ navigation }) {
   const { theme } = useTheme();
+  const { t } = useLanguage();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -49,7 +51,7 @@ export default function SearchScreen({ navigation }) {
           styles.lipinskiTag, 
           item.lipinskiPass ? styles.passTag : styles.failTag
         ]}>
-          {item.lipinskiPass ? 'Lipinski: Pass ✅' : 'Lipinski: Alert ⚠️'}
+          {item.lipinskiPass ? t.lipinskiPass : t.lipinskiAlert}
         </Text>
         <Text style={[styles.mwText, { color: theme.subText }]}>MW: {item.molecularWeight}</Text>
       </View>
@@ -65,7 +67,7 @@ export default function SearchScreen({ navigation }) {
             styles.input, 
             { backgroundColor: theme.card, color: theme.text, borderColor: theme.border }
           ]}
-          placeholder="Search compound or plant (Sinhala / Tamil)..."
+          placeholder={t.searchPlaceholder}
           placeholderTextColor={theme.subText}
           value={searchQuery}
           onChangeText={setSearchQuery}
@@ -93,7 +95,7 @@ export default function SearchScreen({ navigation }) {
                 { color: theme.text },
                 selectedCategory === cat && styles.activeFilterText
               ]}>
-                {cat}
+                {cat === 'All' ? t.all : cat}
               </Text>
             </TouchableOpacity>
           )}
@@ -110,8 +112,8 @@ export default function SearchScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={[styles.emptyText, { color: theme.primary }]}>No matching compounds found 🧪</Text>
-            <Text style={[styles.emptySubtext, { color: theme.subText }]}>Try searching with a different name or select "All" categories.</Text>
+            <Text style={[styles.emptyText, { color: theme.primary }]}>{t.noResults}</Text>
+            <Text style={[styles.emptySubtext, { color: theme.subText }]}>{t.tryDifferentSearch}</Text>
           </View>
         }
       />

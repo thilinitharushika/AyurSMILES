@@ -8,10 +8,12 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
 import compoundsData from '../data/compounds.json';
 
 export default function ExploreScreen({ navigation }) {
   const { theme } = useTheme();
+  const { t } = useLanguage();
 
   const renderItem = ({ item }) => (
     <TouchableOpacity 
@@ -36,7 +38,7 @@ export default function ExploreScreen({ navigation }) {
           styles.lipinskiTag, 
           item.lipinskiPass ? styles.passTag : styles.failTag
         ]}>
-          {item.lipinskiPass ? 'Lipinski: Pass ✅' : 'Lipinski: Alert ⚠️'}
+          {item.lipinskiPass ? t.lipinskiPass : t.lipinskiAlert}
         </Text>
         <Text style={[styles.mwText, { color: theme.subText }]}>MW: {item.molecularWeight}</Text>
       </View>
@@ -46,9 +48,9 @@ export default function ExploreScreen({ navigation }) {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       <View style={styles.headerContainer}>
-        <Text style={[styles.headerTitle, { color: theme.text }]}>Explore Compounds</Text>
+        <Text style={[styles.headerTitle, { color: theme.text }]}>{t.exploreCompounds}</Text>
         <Text style={[styles.headerSubtitle, { color: theme.subText }]}>
-          Showing {compoundsData.length} indexed traditional medicinal compounds
+          {compoundsData.length} {t.showingIndexed}
         </Text>
       </View>
 

@@ -4,10 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Ionicons } from '@expo/vector-icons';
 
-// 1. Import Theme Provider
 import { ThemeProvider, useTheme } from './context/ThemeContext';
+import { LanguageProvider, useLanguage } from './context/LanguageContext';
 
-// 2. Import Screens
 import HomeScreen from './screens/HomeScreen';
 import ExploreScreen from './screens/ExploreScreen';
 import SearchScreen from './screens/SearchScreen';
@@ -17,9 +16,9 @@ import DetailScreen from './screens/DetailScreen';
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
-// Tab Navigator Component with Icons & Active Theme support
 function MainTabs() {
   const { theme } = useTheme();
+  const { t } = useLanguage();
 
   return (
     <Tab.Navigator
@@ -35,7 +34,6 @@ function MainTabs() {
         tabBarInactiveTintColor: '#8d99ae',
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-
           if (route.name === 'Home') {
             iconName = focused ? 'home' : 'home-outline';
           } else if (route.name === 'Explore') {
@@ -45,37 +43,37 @@ function MainTabs() {
           } else if (route.name === 'Favorites') {
             iconName = focused ? 'heart' : 'heart-outline';
           }
-
           return <Ionicons name={iconName} size={size} color={color} />;
         },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Explore" component={ExploreScreen} />
-      <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="Favorites" component={FavoritesScreen} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: t.appTitle.split(' ')[0] }} />
+      <Tab.Screen name="Explore" component={ExploreScreen} options={{ tabBarLabel: t.exploreAll }} />
+      <Tab.Screen name="Search" component={SearchScreen} options={{ tabBarLabel: t.searchFilter.split(' ')[0] }} />
+      <Tab.Screen name="Favorites" component={FavoritesScreen} options={{ tabBarLabel: t.favorites }} />
     </Tab.Navigator>
   );
 }
 
-// Main App Component
 export default function App() {
   return (
     <ThemeProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen 
-            name="MainTabs" 
-            component={MainTabs} 
-            options={{ headerShown: false }} 
-          />
-          <Stack.Screen 
-            name="Detail" 
-            component={DetailScreen} 
-            options={{ title: 'Compound Details' }} 
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <LanguageProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen 
+              name="MainTabs" 
+              component={MainTabs} 
+              options={{ headerShown: false }} 
+            />
+            <Stack.Screen 
+              name="Detail" 
+              component={DetailScreen} 
+              options={{ title: 'Compound Details' }} 
+            />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </LanguageProvider>
     </ThemeProvider>
   );
 }
