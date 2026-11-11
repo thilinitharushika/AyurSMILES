@@ -1,65 +1,80 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 import { 
   StyleSheet, 
   Text, 
   View, 
   FlatList, 
-  TouchableOpacity, 
-  SafeAreaView 
+  TouchableOpacity 
 } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
+import { useTheme } from '../context/ThemeContext';
+import { useLanguage } from '../context/LanguageContext';
+import { useFavorites } from '../context/FavoritesContext';
+import compoundsData from '../data/compounds.json';
 
 export default function FavoritesScreen({ navigation }) {
-  const [favorites, setFavorites] = useState([]);
+  const { theme } = useTheme();
+  const { t } = useLanguage();
+  const { favoriteIds, toggleFavorite } = useFavorites();
 
-  // Refreshes saved favorites list whenever user navigates back to this screen
-  useFocusEffect(
-    useCallback(() => {
-      loadFavorites();
-    }, [])
-  );
-
-  const loadFavorites = async () => {
-    try {
-      const storedFavorites = await AsyncStorage.getItem('@favorite_compounds');
-      if (storedFavorites !== null) {
-        setFavorites(JSON.parse(storedFavorites));
-      } else {
-        setFavorites([]);
-      }
-    } catch (e) {
-      console.error('Error loading favorites:', e);
-    }
-  };
+  const savedCompounds = compoundsData.filter((c) => favoriteIds.includes(c.id));
 
   const renderItem = ({ item }) => (
     <TouchableOpacity 
-      style={styles.card}
+      style={[styles.card, { backgroundColor: theme.card, borderColor: theme.border }]}
       onPress={() => navigation.navigate('Detail', { compound: item })}
     >
       <View style={styles.cardHeader}>
-        <Text style={styles.compoundName}>{item.name}</Text>
-        <Text style={styles.categoryBadge}>{item.category}</Text>
+        <Text style={[styles.compoundName, { color: theme.primary }]}>{item.name}</Text>
+        <TouchableOpacity 
+          onPress={() => toggleFavorite(item.id)}
+          hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}
+        >
+          <Ionicons name="heart" size={20} color="#e63946" />
+        </TouchableOpacity>
       </View>
-      <Text style={styles.plantSource}>🌿 {item.plantSource}</Text>
+      
+      <Text style={[styles.plantSource, { color: theme.subText }]} numberOfLines={1}>🌿 {item.plantSource}</Text>
+      
+      <Text style={[styles.useText, { color: theme.text }]} numberOfLines={2}>
+        {item.traditionalUse}
+      </Text>
+
+      <View style={[styles.footerRow, { borderTopColor: theme.border }]}>
+        <Text style={[
+          styles.lipinskiTag, 
+          item.lipinskiPass ? styles.passTag : styles.failTag
+        ]}>
+          {item.lipinskiPass ? t.lipinskiPass : t.lipinskiAlert}
+        </Text>
+        <Text style={[styles.mwText, { color: theme.subText }]}>MW: {item.molecularWeight}</Text>
+      </View>
     </TouchableOpacity>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.headerTitle}>Bookmarked Compounds</Text>
-      <Text style={styles.headerSubtitle}>Saved offline in local device storage</Text>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
+      <View style={styles.headerContainer}>
+        <Text style={[styles.headerTitle, { color: theme.text }]}>{t.favorites}</Text>
+        <Text style={[styles.headerSubtitle, { color: theme.subText }]}>
+          {savedCompounds.length} {t.savedBookmarks || 'Saved bookmarks'}
+        </Text>
+      </View>
 
       <FlatList
-        data={favorites}
+        data={savedCompounds}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.listContainer}
+        showsVerticalScrollIndicator={false}
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
-            <Text style={styles.emptyText}>No saved favorites yet! ⭐</Text>
-            <Text style={styles.emptySubtext}>Open any compound detail view and tap "Save to Favorites".</Text>
+            <Ionicons name="heart-dislike-outline" size={48} color={theme.subText} style={{ marginBottom: 12 }} />
+            <Text style={[styles.emptyTitle, { color: theme.text }]}>No favorites saved yet</Text>
+            <Text style={[styles.emptySubtext, { color: theme.subText }]}>
+              Tap the heart icon on any compound detail page to save it for quick offline reference.
+            </Text>
           </View>
         }
       />
@@ -68,16 +83,92 @@ export default function FavoritesScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f4f7f6', paddingHorizontal: 16, paddingTop: 20 },
-  headerTitle: { fontSize: 24, fontWeight: 'bold', color: '#1b4332' },
-  headerSubtitle: { fontSize: 13, color: '#52796f', marginBottom: 15 },
-  listContainer: { paddingBottom: 20 },
-  card: { backgroundColor: '#fff', padding: 16, borderRadius: 12, marginBottom: 12, shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2, elevation: 2 },
-  cardHeader: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 },
-  compoundName: { fontSize: 18, fontWeight: 'bold', color: '#2d6a4f' },
-  categoryBadge: { backgroundColor: '#e2f0d9', color: '#385723', fontSize: 10, paddingHorizontal: 8, paddingVertical: 4, borderRadius: 6, overflow: 'hidden', fontWeight: 'bold' },
-  plantSource: { fontSize: 13, color: '#495057' },
-  emptyContainer: { alignItems: 'center', marginTop: 50, paddingHorizontal: 20 },
-  emptyText: { fontSize: 16, fontWeight: 'bold', color: '#2d6a4f', marginBottom: 6 },
-  emptySubtext: { fontSize: 13, color: '#8d99ae', textAlign: 'center' }
+  container: { 
+    flex: 1, 
+    paddingHorizontal: 16, 
+    paddingTop: 10 
+  },
+  headerContainer: { 
+    marginBottom: 14 
+  },
+  headerTitle: { 
+    fontSize: 24, 
+    fontWeight: 'bold' 
+  },
+  headerSubtitle: { 
+    fontSize: 13, 
+    marginTop: 2 
+  },
+  listContainer: { 
+    paddingBottom: 20 
+  },
+  card: { 
+    padding: 16, 
+    borderRadius: 14, 
+    marginBottom: 12, 
+    borderWidth: 1,
+    elevation: 2 
+  },
+  cardHeader: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    marginBottom: 6 
+  },
+  compoundName: { 
+    fontSize: 18, 
+    fontWeight: 'bold' 
+  },
+  plantSource: { 
+    fontSize: 13, 
+    fontWeight: '600', 
+    marginBottom: 8 
+  },
+  useText: { 
+    fontSize: 13, 
+    marginBottom: 12, 
+    lineHeight: 18 
+  },
+  footerRow: { 
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    alignItems: 'center', 
+    borderTopWidth: 1, 
+    paddingTop: 10 
+  },
+  lipinskiTag: { 
+    fontSize: 11, 
+    fontWeight: 'bold', 
+    paddingHorizontal: 8, 
+    paddingVertical: 3, 
+    borderRadius: 6, 
+    overflow: 'hidden' 
+  },
+  passTag: { 
+    backgroundColor: '#d8f3dc', 
+    color: '#1b4332' 
+  },
+  failTag: { 
+    backgroundColor: '#ffccd5', 
+    color: '#c9184a' 
+  },
+  mwText: { 
+    fontSize: 12, 
+    fontWeight: '500' 
+  },
+  emptyContainer: { 
+    alignItems: 'center', 
+    marginTop: 60, 
+    paddingHorizontal: 24 
+  },
+  emptyTitle: { 
+    fontSize: 18, 
+    fontWeight: 'bold', 
+    marginBottom: 8 
+  },
+  emptySubtext: { 
+    fontSize: 13, 
+    textAlign: 'center', 
+    lineHeight: 18 
+  }
 });

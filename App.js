@@ -6,6 +6,7 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
+import { FavoritesProvider } from './context/FavoritesContext';
 
 import HomeScreen from './screens/HomeScreen';
 import ExploreScreen from './screens/ExploreScreen';
@@ -59,20 +60,22 @@ export default function App() {
   return (
     <ThemeProvider>
       <LanguageProvider>
-        <NavigationContainer>
-          <Stack.Navigator>
-            <Stack.Screen 
-              name="MainTabs" 
-              component={MainTabs} 
-              options={{ headerShown: false }} 
-            />
-            <Stack.Screen 
-              name="Detail" 
-              component={DetailScreen} 
-              options={{ title: 'Compound Details' }} 
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
+        <FavoritesProvider>
+          <NavigationContainer>
+            <Stack.Navigator>
+              <Stack.Screen 
+                name="MainTabs" 
+                component={MainTabs} 
+                options={{ headerShown: false }} 
+              />
+              <Stack.Screen 
+                name="Detail" 
+                component={DetailScreen} 
+                options={{ title: 'Compound Details' }} 
+              />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </FavoritesProvider>
       </LanguageProvider>
     </ThemeProvider>
   );

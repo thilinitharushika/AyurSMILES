@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useLayoutEffect } from 'react';
 import { 
   StyleSheet, 
   Text, 
@@ -9,14 +9,40 @@ import {
   Platform 
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { useTheme } from '../context/ThemeContext';
 import { useLanguage } from '../context/LanguageContext';
+import { useFavorites } from '../context/FavoritesContext';
 
 export default function DetailScreen({ route, navigation }) {
   const { theme } = useTheme();
   const { t } = useLanguage();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const { compound } = route.params || {};
+
+  const fav = compound ? isFavorite(compound.id) : false;
+
+  // Add Interactive Heart Icon in Header Bar
+  useLayoutEffect(() => {
+    if (compound) {
+      navigation.setOptions({
+        headerRight: () => (
+          <TouchableOpacity 
+            onPress={() => toggleFavorite(compound.id)}
+            style={{ marginRight: 8 }}
+            activeOpacity={0.7}
+          >
+            <Ionicons 
+              name={fav ? 'heart' : 'heart-outline'} 
+              size={24} 
+              color={fav ? '#e63946' : theme.text} 
+            />
+          </TouchableOpacity>
+        ),
+      });
+    }
+  }, [navigation, compound, fav, theme]);
 
   if (!compound) {
     return (
@@ -26,7 +52,6 @@ export default function DetailScreen({ route, navigation }) {
     );
   }
 
-  // Handle SMILES Clipboard Copy
   const handleCopySmiles = async () => {
     if (compound.smiles) {
       if (Clipboard.setStringAsync) {
@@ -50,12 +75,16 @@ export default function DetailScreen({ route, navigation }) {
             <Text style={[styles.categoryBadge, { backgroundColor: theme.badgeBg, color: theme.badgeText }]}>
               {compound.category || 'Phytochemical'}
             </Text>
-            <Text style={[
-              styles.lipinskiBadge, 
-              compound.lipinskiPass ? styles.passBadge : styles.failBadge
-            ]}>
-              {compound.lipinskiPass ? (t.lipinskiPass || 'Lipinski: Pass ✅') : (t.lipinskiAlert || 'Lipinski: Alert ⚠️')}
-            </Text>
+            <TouchableOpacity 
+              style={[styles.favBadgeBtn, { backgroundColor: fav ? '#ffe5ec' : theme.background, borderColor: fav ? '#ff4d6d' : theme.border }]}
+              onPress={() => toggleFavorite(compound.id)}
+              activeOpacity={0.8}
+            >
+              <Ionicons name={fav ? 'heart' : 'heart-outline'} size={14} color={fav ? '#ff4d6d' : theme.subText} />
+              <Text style={[styles.favBadgeText, { color: fav ? '#ff4d6d' : theme.subText }]}>
+                {fav ? 'Saved' : 'Bookmark'}
+              </Text>
+            </TouchableOpacity>
           </View>
 
           <Text style={[styles.title, { color: theme.primary }]}>{compound.name}</Text>
@@ -92,35 +121,30 @@ export default function DetailScreen({ route, navigation }) {
           </Text>
 
           <View style={styles.gridContainer}>
-            {/* Molecular Weight */}
             <View style={[styles.gridCard, { backgroundColor: theme.background, borderColor: theme.border }]}>
               <Text style={[styles.gridLabel, { color: theme.subText }]}>{t.molecularWeight || 'MW'}</Text>
               <Text style={[styles.gridValue, { color: theme.text }]}>{compound.molecularWeight || 'N/A'}</Text>
               <Text style={[styles.gridUnit, { color: theme.subText }]}>g/mol</Text>
             </View>
 
-            {/* LogP */}
             <View style={[styles.gridCard, { backgroundColor: theme.background, borderColor: theme.border }]}>
               <Text style={[styles.gridLabel, { color: theme.subText }]}>{t.logP || 'LogP'}</Text>
               <Text style={[styles.gridValue, { color: theme.text }]}>{compound.logP ?? 'N/A'}</Text>
               <Text style={[styles.gridUnit, { color: theme.subText }]}>lipophilicity</Text>
             </View>
 
-            {/* H-Donors */}
             <View style={[styles.gridCard, { backgroundColor: theme.background, borderColor: theme.border }]}>
               <Text style={[styles.gridLabel, { color: theme.subText }]}>{t.hDonors || 'H-Donors'}</Text>
               <Text style={[styles.gridValue, { color: theme.text }]}>{compound.hBondDonors ?? 'N/A'}</Text>
               <Text style={[styles.gridUnit, { color: theme.subText }]}>donors</Text>
             </View>
 
-            {/* H-Acceptors */}
             <View style={[styles.gridCard, { backgroundColor: theme.background, borderColor: theme.border }]}>
               <Text style={[styles.gridLabel, { color: theme.subText }]}>{t.hAcceptors || 'H-Acceptors'}</Text>
               <Text style={[styles.gridValue, { color: theme.text }]}>{compound.hBondAcceptors ?? 'N/A'}</Text>
               <Text style={[styles.gridUnit, { color: theme.subText }]}>acceptors</Text>
             </View>
 
-            {/* TPSA */}
             <View style={[styles.gridCardWide, { backgroundColor: theme.background, borderColor: theme.border }]}>
               <View>
                 <Text style={[styles.gridLabel, { color: theme.subText }]}>{t.tpsa || 'TPSA (Polar Surface Area)'}</Text>
@@ -169,9 +193,8 @@ const styles = StyleSheet.create({
   heroCard: { padding: 18, borderRadius: 16, borderWidth: 1, marginBottom: 16, elevation: 2 },
   badgeRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 },
   categoryBadge: { fontSize: 11, fontWeight: 'bold', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, overflow: 'hidden' },
-  lipinskiBadge: { fontSize: 11, fontWeight: 'bold', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, overflow: 'hidden' },
-  passBadge: { backgroundColor: '#d8f3dc', color: '#1b4332' },
-  failBadge: { backgroundColor: '#ffccd5', color: '#c9184a' },
+  favBadgeBtn: { flexDirection: 'row', alignItems: 'center', gap: 4, paddingHorizontal: 10, paddingVertical: 4, borderRadius: 8, borderWidth: 1 },
+  favBadgeText: { fontSize: 11, fontWeight: 'bold' },
   title: { fontSize: 26, fontWeight: 'bold', marginBottom: 4 },
   plantSource: { fontSize: 14, fontWeight: '600' },
   sectionCard: { padding: 16, borderRadius: 16, borderWidth: 1, marginBottom: 16, elevation: 2 },
