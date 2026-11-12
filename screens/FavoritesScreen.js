@@ -71,9 +71,9 @@ export default function FavoritesScreen({ navigation }) {
         ListEmptyComponent={
           <View style={styles.emptyContainer}>
             <Ionicons name="heart-dislike-outline" size={48} color={theme.subText} style={{ marginBottom: 12 }} />
-            <Text style={[styles.emptyTitle, { color: theme.text }]}>No favorites saved yet</Text>
+            <Text style={[styles.emptyTitle, { color: theme.text }]}>{t.noFavoritesTitle}</Text>
             <Text style={[styles.emptySubtext, { color: theme.subText }]}>
-              Tap the heart icon on any compound detail page to save it for quick offline reference.
+              {t.noFavoritesSubtext}
             </Text>
           </View>
         }
@@ -164,7 +164,8 @@ const styles = StyleSheet.create({
   emptyTitle: { 
     fontSize: 18, 
     fontWeight: 'bold', 
-    marginBottom: 8 
+    marginBottom: 8, 
+    textAlign: 'center' 
   },
   emptySubtext: { 
     fontSize: 13, 

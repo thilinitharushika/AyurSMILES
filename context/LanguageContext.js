@@ -42,6 +42,10 @@ export const translations = {
     traditionalUseLabel: 'Traditional Use & Efficacy',
     categoryLabel: 'Compound Class',
     lipinskiEvaluation: "Lipinski's Rule of Five Evaluation",
+    savedBadge: 'Saved',
+    bookmarkBadge: 'Bookmark',
+    noFavoritesTitle: 'No favorites saved yet',
+    noFavoritesSubtext: 'Tap the heart icon on any compound detail page to save it for quick offline reference.',
   },
   si: {
     appTitle: 'ආයුර් SMILES 🌿',
@@ -81,6 +85,10 @@ export const translations = {
     traditionalUseLabel: 'සාම්ප්‍රදායික භාවිතය',
     categoryLabel: 'සංයෝග වර්ගය',
     lipinskiEvaluation: 'ලිපින්ස්කි රීති ඇගයීම',
+    savedBadge: 'සුරකින ලදී',
+    bookmarkBadge: 'පිටු සලකුණ',
+    noFavoritesTitle: 'තවමත් ප්‍රියතම සංයෝග සුරැක නැත',
+    noFavoritesSubtext: 'ඕනෑම සංයෝග විස්තර පිටුවක ඇති හදවත (Heart) අයිකනය ඔබා ඉක්මන් ඕෆ්ලයින් පරිශීලනය සඳහා එය සුරකින්න.',
   },
   ta: {
     appTitle: 'ஆயுர் SMILES 🌿',
@@ -120,6 +128,10 @@ export const translations = {
     traditionalUseLabel: 'பாரம்பரிய பயன்பாடு',
     categoryLabel: 'கலவை வகை',
     lipinskiEvaluation: 'லிபின்ஸ்கி விதி மதிப்பீடு',
+    savedBadge: 'சேமிக்கப்பட்டது',
+    bookmarkBadge: 'புக்மார்க்',
+    noFavoritesTitle: 'இன்னும் விருப்பமானவை எதுவும் சேமிக்கப்படவில்லை',
+    noFavoritesSubtext: 'விரைவான ஆஃப்லைன் குறிப்புக்காக எந்தவொரு கலவை விவரப் பக்கத்திலும் உள்ள இதய ஐகானைத் தட்டவும்.',
   }
 };
 

@@ -82,7 +82,7 @@ export default function DetailScreen({ route, navigation }) {
             >
               <Ionicons name={fav ? 'heart' : 'heart-outline'} size={14} color={fav ? '#ff4d6d' : theme.subText} />
               <Text style={[styles.favBadgeText, { color: fav ? '#ff4d6d' : theme.subText }]}>
-                {fav ? 'Saved' : 'Bookmark'}
+                {fav ? t.savedBadge : t.bookmarkBadge}
               </Text>
             </TouchableOpacity>
           </View>
