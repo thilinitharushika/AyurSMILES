@@ -1,12 +1,18 @@
-# 🌿 AyurSMILES
+AyurSMILES 🌿
 
-> **A 100% Offline-Capable, Bilingual (Sinhala/Tamil) React Native Mobile Application for Traditional Medicinal Compound & Cheminformatics Analysis.**
+Offline-first, trilingual (English, Sinhala, Tamil) React Native cheminformatics app bridging Ayurvedic phytochemistry with computational drug discovery.
 
----
+🎯 Why AyurSMILES? (Problems Solved)
 
-## 📱 About the Project
+🔍 AyurSMILES solves four core ethnobotanical research bottlenecks:
 
-**AyurSMILES** is developed as an advanced university software project designed to bridge traditional Ayurvedic botanical knowledge with modern cheminformatics. By indexing active phytochemical constituents alongside molecular descriptors, Lipinski's Rule of Five compliance, and traditional uses, the application empowers researchers, students, and practitioners to analyze plant-derived medicinal compounds entirely offline.
+⭐ Plant-to-Molecule Link: Connects traditional Ayurvedic plants directly to SMILES structures and drug-likeness profiles.
+
+⭐Zero Internet Needed: 100% offline-first access for field research and unstable lab connections.
+
+⭐Trilingual UI: Inclusive English, Sinhala, and Tamil support for students and local practitioners.
+
+⭐Instant Screening: Automated Lipinski’s Rule of Five checks and one-tap SMILES clipboard copying.
 
 ---
 
@@ -35,15 +41,20 @@
 
 ```text
 AyurSMILES/
-│
-├── assets/             # App icons, splash screens, and images
-├── context/            # React Context (ThemeContext.js for Dark/Light mode)
-├── data/               # Local dataset (compounds.json)
-├── screens/            # Screen components (HomeScreen, ExploreScreen, SearchScreen, FavoritesScreen, DetailScreen)
-├── theme/              # Color palettes and global theme variables (colors.js)
-├── App.js              # Root navigation and providers setup
-├── app.json            # Expo configuration
-└── package.json        # Project dependencies
+├── App.js                        # Root navigation & Context providers
+├── context/
+│   ├── ThemeContext.js           # Light/Dark theme state & AsyncStorage sync
+│   ├── LanguageContext.js        # Trilingual translations (EN, SI, TA)
+│   └── FavoritesContext.js       # Persistent bookmarking state
+├── data/
+│   └── compounds.json            # Offline Ayurvedic phytochemical dataset
+├── screens/
+│   ├── HomeScreen.js             # Dashboard, stats, theme/language switchers
+│   ├── ExploreScreen.js          # Full compound directory
+│   ├── SearchScreen.js           # Real-time search & category filtering
+│   ├── FavoritesScreen.js        # Saved phytochemical bookmarks
+│   └── DetailScreen.js           # SMILES, descriptors & Lipinski profile
+└── README.md
 
 🚀 Getting Started & Installation
 Follow these steps to run the project locally on your machine:
