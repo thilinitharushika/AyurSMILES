@@ -1,39 +1,39 @@
-AyurSMILES 🌿
+# AyurSMILES 🌿
 
 Offline-first, trilingual (English, Sinhala, Tamil) React Native cheminformatics app bridging Ayurvedic phytochemistry with computational drug discovery.
 
-🎯 Why AyurSMILES? (Problems Solved)
+---
+
+## 🎯 Why AyurSMILES? (Problems Solved)
 
 🔍 AyurSMILES solves four core ethnobotanical research bottlenecks:
 
-⭐ Plant-to-Molecule Link: Connects traditional Ayurvedic plants directly to SMILES structures and drug-likeness profiles.
-
-⭐Zero Internet Needed: 100% offline-first access for field research and unstable lab connections.
-
-⭐Trilingual UI: Inclusive English, Sinhala, and Tamil support for students and local practitioners.
-
-⭐Instant Screening: Automated Lipinski’s Rule of Five checks and one-tap SMILES clipboard copying.
+* ⭐ **Plant-to-Molecule Link:** Connects traditional Ayurvedic plants directly to SMILES structures and drug-likeness profiles.
+* ⭐ **Zero Internet Needed:** 100% offline-first access for field research and unstable lab connections.
+* ⭐ **Trilingual UI:** Inclusive English, Sinhala, and Tamil support for students and local practitioners.
+* ⭐ **Instant Screening:** Automated Lipinski’s Rule of Five checks and one-tap SMILES clipboard copying.
 
 ---
 
 ## ✨ Key Features
 
-- **🔬 Cheminformatics & Molecular Data:** View detailed physicochemical parameters including molecular weight, hydrogen bond donors/acceptors, and Lipinski's Rule of Five screening.
-- **🌐 100% Offline Capability:** Fully functional local JSON database (`compounds.json`) requiring no active internet connection or remote server backend.
-- **🔍 Advanced Search & Dynamic Filtering:** Real-time search across English, Sinhala, and Tamil plant sources with horizontal category pills.
-- **🌙 Light & Dark Mode:** Persistent theme preferences managed via custom `ThemeContext` and `AsyncStorage`.
-- **⭐ Favorites Management:** Bookmark critical compounds for quick reference and study.
-- **🛡️ Clean Architecture & Navigation:** Built with Expo, React Navigation (Bottom Tabs & Native Stack), and safe area layout structures.
+* **🔐 Offline Researcher Authentication:** 100% offline Sign Up, Sign In, persistent user sessions, and Sign Out powered by `AuthContext` and `AsyncStorage`.
+* **🔬 Cheminformatics & Molecular Data:** View detailed physicochemical parameters including molecular weight, hydrogen bond donors/acceptors, and Lipinski's Rule of Five screening.
+* **🌐 100% Offline Capability:** Fully functional local JSON database (`compounds.json`) requiring no active internet connection or remote server backend.
+* **🔍 Advanced Search & Dynamic Filtering:** Real-time search across English, Sinhala, and Tamil plant sources with horizontal category pills.
+* **🌙 Light & Dark Mode:** Persistent theme preferences managed via custom `ThemeContext` and `AsyncStorage`.
+* **⭐ Favorites Management:** Bookmark critical compounds for quick reference and study.
+* **🛡️ Clean Architecture & Navigation:** Built with Expo, React Navigation (Bottom Tabs & Native Stack), and safe area layout structures.
 
 ---
 
 ## 🛠️ Tech Stack
 
-- **Framework:** React Native / Expo
-- **Navigation:** React Navigation (`@react-navigation/native`, `@react-navigation/bottom-tabs`, `@react-navigation/native-stack`)
-- **Persistence:** `@react-native-async-storage/async-storage`
-- **UI & Icons:** `@expo/vector-icons`, React Native Safe Area Context
-- **Data Storage:** Local structured JSON (`compounds.json`)
+* **Framework:** React Native / Expo
+* **Navigation:** React Navigation (`@react-navigation/native`, `@react-navigation/bottom-tabs`, `@react-navigation/native-stack`)
+* **Persistence:** `@react-native-async-storage/async-storage`
+* **UI & Icons:** `@expo/vector-icons`, React Native Safe Area Context
+* **Data Storage:** Local structured JSON (`compounds.json`)
 
 ---
 
@@ -41,20 +41,23 @@ Offline-first, trilingual (English, Sinhala, Tamil) React Native cheminformatics
 
 ```text
 AyurSMILES/
-├── App.js                        # Root navigation & Context providers
+├── App.js                        # Root navigation, conditional Auth routing & Context providers
 ├── context/
+│   ├── AuthContext.js            # Offline Sign Up, Sign In, Sign Out & session persistence
 │   ├── ThemeContext.js           # Light/Dark theme state & AsyncStorage sync
 │   ├── LanguageContext.js        # Trilingual translations (EN, SI, TA)
 │   └── FavoritesContext.js       # Persistent bookmarking state
 ├── data/
 │   └── compounds.json            # Offline Ayurvedic phytochemical dataset
 ├── screens/
-│   ├── HomeScreen.js             # Dashboard, stats, theme/language switchers
-│   ├── ExploreScreen.js          # Full compound directory
-│   ├── SearchScreen.js           # Real-time search & category filtering
+│   ├── AuthScreen.js             # Researcher Sign In & Account Creation screen
+│   ├── HomeScreen.js             # Compendium search, category filters, theme/language switchers
 │   ├── FavoritesScreen.js        # Saved phytochemical bookmarks
 │   └── DetailScreen.js           # SMILES, descriptors & Lipinski profile
 └── README.md
+
+
+--------------------------------------------------
 
 🚀 Getting Started & Installation
 Follow these steps to run the project locally on your machine:
@@ -66,7 +69,7 @@ Expo Go app installed on your mobile device (or Android Studio / Xcode simulator
 
 Installation Steps
 1. Clone the repository:
-git clone [https://github.com/your-username/AyurSMILES.git](https://github.com/your-username/AyurSMILES.git)
+git clone [https://github.com/thilinitharushika/AyurSMILES.git](https://github.com/thilinitharushika/AyurSMILES.git)
 cd AyurSMILES
 
 2.Install dependencies:
@@ -84,6 +87,4 @@ Scan the QR code displayed in your terminal using the Expo Go app (Android) or C
 ##📜 License
 This project is developed as part of academic coursework for institutional evaluation. All rights reserved.
 
----
 
-Create a new file named `README.md` in your project folder, paste this code inside, and you're all set! Let me know what part of the code or presentation preparation you'd like to dive into next! 🚀🌿
