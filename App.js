@@ -1,21 +1,25 @@
 import React from 'react';
+import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+// Contexts
 import { ThemeProvider, useTheme } from './context/ThemeContext';
 import { LanguageProvider, useLanguage } from './context/LanguageContext';
 import { FavoritesProvider } from './context/FavoritesContext';
+import { AuthProvider, useAuth } from './context/AuthContext';
 
+// Screens
 import HomeScreen from './screens/HomeScreen';
-import ExploreScreen from './screens/ExploreScreen';
-import SearchScreen from './screens/SearchScreen';
-import FavoritesScreen from './screens/FavoritesScreen';
 import DetailScreen from './screens/DetailScreen';
+import FavoritesScreen from './screens/FavoritesScreen';
+import AuthScreen from './screens/AuthScreen';
 
-const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
 function MainTabs() {
   const { theme } = useTheme();
@@ -24,59 +28,101 @@ function MainTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerShown: true,
-        headerStyle: { backgroundColor: theme.card },
-        headerTitleStyle: { color: theme.text },
-        tabBarStyle: { 
-          backgroundColor: theme.card, 
-          borderTopColor: theme.border 
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: theme.card,
+          borderTopColor: theme.border,
+          elevation: 8,
+          height: 60,
+          paddingBottom: 8,
+          paddingTop: 8,
         },
         tabBarActiveTintColor: theme.primary,
-        tabBarInactiveTintColor: '#8d99ae',
+        tabBarInactiveTintColor: theme.subText,
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
-          if (route.name === 'Home') {
-            iconName = focused ? 'home' : 'home-outline';
-          } else if (route.name === 'Explore') {
-            iconName = focused ? 'compass' : 'compass-outline';
-          } else if (route.name === 'Search') {
-            iconName = focused ? 'search' : 'search-outline';
-          } else if (route.name === 'Favorites') {
+          if (route.name === 'Compendium') {
+            iconName = focused ? 'flask' : 'flask-outline';
+          } else if (route.name === 'FavoritesTab') {
             iconName = focused ? 'heart' : 'heart-outline';
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: '600',
+        },
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} options={{ tabBarLabel: t.appTitle.split(' ')[0] }} />
-      <Tab.Screen name="Explore" component={ExploreScreen} options={{ tabBarLabel: t.exploreAll }} />
-      <Tab.Screen name="Search" component={SearchScreen} options={{ tabBarLabel: t.searchFilter.split(' ')[0] }} />
-      <Tab.Screen name="Favorites" component={FavoritesScreen} options={{ tabBarLabel: t.favorites }} />
+      <Tab.Screen 
+        name="Compendium" 
+        component={HomeScreen} 
+        options={{ title: t.compendiumTab || 'Compendium' }}
+      />
+      <Tab.Screen 
+        name="FavoritesTab" 
+        component={FavoritesScreen} 
+        options={{ title: t.favoritesTab || 'Favorites' }}
+      />
     </Tab.Navigator>
+  );
+}
+
+function MainAppStack() {
+  const { theme } = useTheme();
+
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: { backgroundColor: theme.card },
+        headerTintColor: theme.text,
+        headerTitleStyle: { fontWeight: 'bold' },
+        headerShadowVisible: false,
+      }}
+    >
+      <Stack.Screen 
+        name="MainTabs" 
+        component={MainTabs} 
+        options={{ headerShown: false }} 
+      />
+      <Stack.Screen 
+        name="Detail" 
+        component={DetailScreen} 
+        options={({ route }) => ({ 
+          title: route.params?.compound?.name || 'Compound Details' 
+        })} 
+      />
+    </Stack.Navigator>
+  );
+}
+
+function RootNavigator() {
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return null; // Prevents render flicker while AsyncStorage session loads
+  }
+
+  return (
+    <NavigationContainer>
+      <StatusBar style="auto" />
+      {user ? <MainAppStack /> : <AuthScreen />}
+    </NavigationContainer>
   );
 }
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <LanguageProvider>
-        <FavoritesProvider>
-          <NavigationContainer>
-            <Stack.Navigator>
-              <Stack.Screen 
-                name="MainTabs" 
-                component={MainTabs} 
-                options={{ headerShown: false }} 
-              />
-              <Stack.Screen 
-                name="Detail" 
-                component={DetailScreen} 
-                options={{ title: 'Compound Details' }} 
-              />
-            </Stack.Navigator>
-          </NavigationContainer>
-        </FavoritesProvider>
-      </LanguageProvider>
-    </ThemeProvider>
+    <SafeAreaProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <LanguageProvider>
+            <FavoritesProvider>
+              <RootNavigator />
+            </FavoritesProvider>
+          </LanguageProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </SafeAreaProvider>
   );
 }

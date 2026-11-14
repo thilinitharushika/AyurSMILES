@@ -170,6 +170,5 @@ const styles = StyleSheet.create({
   emptySubtext: { 
     fontSize: 13, 
     textAlign: 'center', 
-    lineHeight: 18 
-  }
-});
+    lineHeight: 18
+  }})
