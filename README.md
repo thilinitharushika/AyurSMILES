@@ -27,6 +27,31 @@ Offline-first, trilingual (English, Sinhala, Tamil) React Native cheminformatics
 
 ---
 
+## 📱 App Screenshots
+
+<table>
+  <tr>
+    <td align="center"><strong>🔐 Offline Auth</strong></td>
+    <td align="center"><strong>🌿 Compendium (Home)</strong></td>
+    <td align="center"><strong>🌐 Trilingual UI</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/1.1.jpg" alt="Offline Auth" width="240"/></td>
+    <td><img src="./screenshots/1.jpg" alt="Compendium Home" width="240"/></td>
+    <td><img src="./screenshots/2.1.jpg" alt="Trilingual UI" width="240"/></td>
+  </tr>
+  <tr>
+    <td align="center"><strong>🌙 Dark Mode</strong></td>
+    <td align="center"><strong>🔬 Compound Details</strong></td>
+    <td align="center"><strong>⭐ Saved Favorites</strong></td>
+  </tr>
+  <tr>
+    <td><img src="./screenshots/2.jpg" alt="Dark Mode" width="240"/></td>
+    <td><img src="./screenshots/3.jpg" alt="Compound Details" width="240"/></td>
+    <td><img src="./screenshots/4.jpg" alt="Saved Favorites" width="240"/></td>
+  </tr>
+</table>
+
 ## 🛠️ Tech Stack
 
 * **Framework:** React Native / Expo
